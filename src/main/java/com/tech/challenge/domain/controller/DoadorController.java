@@ -20,7 +20,7 @@ public class DoadorController {
 
     private final DoadorService doadorService;
 
-    @GetMapping
+    @GetMapping("/listagemDoador")
     @Operation(
             summary = "Lista todos os doadores",
             description = "Esse endpoint retorna uma lista de todos os doadores."
@@ -29,7 +29,7 @@ public class DoadorController {
         return ResponseEntity.ok(doadorService.ListarDoadores());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/obterDoadorPeloId/{id}")
     @Operation(
             summary = "Lista o doador pelo ID",
             description = "Esse endpoint retorna o Doador pelo ID."
@@ -38,7 +38,7 @@ public class DoadorController {
         return ResponseEntity.ok(doadorService.ObterDoadorPeloID(id));
     }
 
-    @PostMapping
+    @PostMapping("/inserirDoador")
     @Operation(
             summary = "Insere um novo Doador",
             description = "Esse endpoint insere um novo Doador"
@@ -46,7 +46,7 @@ public class DoadorController {
     public ResponseEntity<DoadorDTO> InserirDoador(@RequestBody DoadorDTO doador){
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(doadorService.InserirDoador(doador));
     }
-    @PutMapping("/{id}")
+    @PutMapping("/atualizaDoadorPeloId/{id}")
     @Operation(
             summary = "Atualiza o Doador através do ID",
             description = "Esse endpoint atualiza um doador através do ID."
@@ -57,7 +57,7 @@ public class DoadorController {
         return ResponseEntity.ok(doadorService.AtualizaDoadorPeloId(id,NovoDoador));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/removerDoador/{id}")
     @Operation(
             summary = "Remove um Doador através do ID",
             description = "Esse endpoint remove um doador através do ID."

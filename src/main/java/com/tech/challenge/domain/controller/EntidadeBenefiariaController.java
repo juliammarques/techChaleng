@@ -19,7 +19,7 @@ public class EntidadeBenefiariaController {
 
     private final EntidadeBeneficiariaService entidadeBeneficiariaService;
 
-    @GetMapping
+    @GetMapping("/listarEntidade")
     @Operation(
             summary = "Lista todas as entidade beneficiárias",
             description = "Esse endpoint retorna uma lista de todas as entidades beneficiárias."
@@ -28,7 +28,7 @@ public class EntidadeBenefiariaController {
         return ResponseEntity.ok(entidadeBeneficiariaService.ListarEntidades());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/obterEntidadeBeneficiaria/{id}")
     @Operation(
             summary = "Lista a entidade beneficiária pelo ID",
             description = "Esse endpoint retorna a entidade beneficiária pelo ID."
@@ -37,7 +37,7 @@ public class EntidadeBenefiariaController {
         return ResponseEntity.ok(entidadeBeneficiariaService.ObterEntidadeBeneficiariaPeloID(id));
     }
 
-    @PostMapping
+    @PostMapping("/inserirEntidadeBeneficiaria")
     @Operation(
             summary = "Insere uma nova entidade beneficiária",
             description = "Esse endpoint insere uma nova entidade beneficiária"
@@ -45,7 +45,7 @@ public class EntidadeBenefiariaController {
     public ResponseEntity<EntidadeBeneficiariaDTO> InserirEntidadeBeneficiaria(@RequestBody EntidadeBeneficiariaDTO doador){
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(entidadeBeneficiariaService.InserirEntidadeBeneficiaria(doador));
     }
-    @PutMapping("/{id}")
+    @PutMapping("/atualizaEntidadeBeneficiariaPeloId/{id}")
     @Operation(
             summary = "Atualiza a entidade beneficiária através do ID",
             description = "Esse endpoint atualiza uma entidade beneficiária através do ID."
@@ -56,7 +56,7 @@ public class EntidadeBenefiariaController {
         return ResponseEntity.ok(entidadeBeneficiariaService.AtualizaEntidadeBeneficiariaPeloId(id,NovoDoador));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/removeEntidadeBeneficiaria/{id}")
     @Operation(
             summary = "Remove uma entidade beneficiária através do ID",
             description = "Esse endpoint remove uma entidade beneficiária através do ID."
