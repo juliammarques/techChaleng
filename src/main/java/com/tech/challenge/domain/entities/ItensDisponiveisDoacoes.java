@@ -14,6 +14,7 @@ public class ItensDisponiveisDoacoes {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private int id_entidade;
 	private String descricao;
 	private Double quantidade;
 	private String status;

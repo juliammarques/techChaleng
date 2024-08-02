@@ -10,7 +10,8 @@ public enum StatusDoacoes {
 	SOLICITADO("Solicitado"),
 	A_CAMINHO("A caminho"),
 	ENTREGUE("Entregue"),
-	REAGENDAR("Reagendar o dia");
+	REAGENDAR("Reagendar o dia"),
+	FINALIZADO("Finalizado");
 	
 	private String descricao;
 	

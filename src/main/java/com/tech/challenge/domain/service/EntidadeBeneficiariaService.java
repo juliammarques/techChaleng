@@ -5,10 +5,8 @@ import com.tech.challenge.domain.controller.exception.ControllerNotFoundExceptio
 import com.tech.challenge.domain.dto.EntidadeBeneficiariaDTO;
 import com.tech.challenge.domain.entities.EntidadeBeneficiaria;
 import com.tech.challenge.domain.formatter.TelefoneFormatter;
-import com.tech.challenge.domain.validators.EmailValidator;
 import com.tech.challenge.domain.validators.TelefoneValidator;
 import com.tech.challenge.infraestructure.repository.EntidadeBeneficiariaRepository;
-import com.tech.challenge.domain.validators.CpfcnpjValidator;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -81,13 +79,9 @@ public class EntidadeBeneficiariaService {
     }
 
     private void validaEntidadeBeneficiaria(EntidadeBeneficiariaDTO entidadeBeneficiariaDTO){
-        if(entidadeBeneficiariaDTO.cnpj().length() != 14)
-            throw new ControllerBadRequestException("O CNPJ é Invalido");
-        if (!CpfcnpjValidator.isValidCNPJ(entidadeBeneficiariaDTO.cnpj()))
-            throw new ControllerBadRequestException("O CNPJ é Invalido");
-        if(!EmailValidator.isValidEmail(entidadeBeneficiariaDTO.email()))
-            throw new ControllerBadRequestException("O Email é Invalido");
         if(!TelefoneValidator.isValidTelefone(entidadeBeneficiariaDTO.telefone()))
             throw new ControllerBadRequestException("O Telefone é Invalido, por favor utilize somente números.");
+        if(entidadeRepo.findBycnpj(entidadeBeneficiariaDTO.cnpj()).isPresent())
+            throw new ControllerBadRequestException("Já existe um registro com o cnpj informado.");
     }
 }

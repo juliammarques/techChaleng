@@ -90,5 +90,7 @@ public class DoadorService {
             throw new ControllerBadRequestException("O Email é Invalido");
         if(!TelefoneValidator.isValidTelefone(doadorDTO.telefone()))
             throw new ControllerBadRequestException("O Telefone é Invalido, por favor utilize somente números.");
+        if(doadorRepo.findBycpfcnpj(doadorDTO.cpfcnpj()).isPresent())
+            throw new ControllerBadRequestException("Já existe um registro com o cpf ou cnpj informado.");
     }
 }

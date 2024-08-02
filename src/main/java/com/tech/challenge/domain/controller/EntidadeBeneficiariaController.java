@@ -4,6 +4,7 @@ import com.tech.challenge.domain.dto.EntidadeBeneficiariaDTO;
 import com.tech.challenge.domain.service.EntidadeBeneficiariaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,8 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/entidadebeneficiaria")
 @RequiredArgsConstructor
-@Tag(name = "EntidadeBeneficiaria EndPoint", description = "Endpoints referente aos métodos da EntidadeBenficiaria.")
-public class EntidadeBenefiariaController {
+@Tag(name = "EntidadeBeneficiaria EndPoint", description = "Endpoints referente aos métodos da EntidadeBeneficiaria.")
+public class EntidadeBeneficiariaController {
 
     private final EntidadeBeneficiariaService entidadeBeneficiariaService;
 
@@ -42,7 +43,7 @@ public class EntidadeBenefiariaController {
             summary = "Insere uma nova entidade beneficiária",
             description = "Esse endpoint insere uma nova entidade beneficiária"
     )
-    public ResponseEntity<EntidadeBeneficiariaDTO> InserirEntidadeBeneficiaria(@RequestBody EntidadeBeneficiariaDTO doador){
+    public ResponseEntity<EntidadeBeneficiariaDTO> InserirEntidadeBeneficiaria(@Valid  @RequestBody EntidadeBeneficiariaDTO doador){
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(entidadeBeneficiariaService.InserirEntidadeBeneficiaria(doador));
     }
     @PutMapping("/atualizaEntidadeBeneficiariaPeloId/{id}")
@@ -52,7 +53,7 @@ public class EntidadeBenefiariaController {
     )
     public ResponseEntity<EntidadeBeneficiariaDTO> AtualizaEntidadeBeneficiariaPeloId(
             @PathVariable int id,
-            @RequestBody EntidadeBeneficiariaDTO NovoDoador){
+            @Valid @RequestBody EntidadeBeneficiariaDTO NovoDoador){
         return ResponseEntity.ok(entidadeBeneficiariaService.AtualizaEntidadeBeneficiariaPeloId(id,NovoDoador));
     }
 

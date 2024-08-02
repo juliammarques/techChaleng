@@ -14,10 +14,10 @@ public class Doacoes {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private int id_doador;
+	private int id_itemDisponivelDoacao;
 	private Integer modalidade;
 	private String status;
-	private Double quantidade;
-	private String medida;
 	private Double valorDoadoReais;
 	
 }
