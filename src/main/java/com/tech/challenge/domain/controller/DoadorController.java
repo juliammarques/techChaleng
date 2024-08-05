@@ -1,6 +1,5 @@
 package com.tech.challenge.domain.controller;
 
-
 import com.tech.challenge.domain.dto.DoacoesDTO;
 import com.tech.challenge.domain.dto.DoadorDTO;
 import com.tech.challenge.domain.service.DoacoesService;
@@ -67,8 +66,12 @@ public class DoadorController {
             description = "Esse endpoint remove um doador através do ID."
     )
     public ResponseEntity<Void> RemoveDoador(@PathVariable int id){
-        doadorService.RemoveDoador(id);
-        return ResponseEntity.noContent().build();
+        boolean isRemoved = doadorService.RemoveDoador(id);
+        if (isRemoved) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        } else {
+            return ResponseEntity.notFound().build(); // 404 Not Found
+        }
     }
     @PostMapping("/realizarDoacao")
     @Operation(

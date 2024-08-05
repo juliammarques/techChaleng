@@ -45,6 +45,7 @@ public class DoadorService {
             Doador doadorRetornado = doadorRepo.getReferenceById(id);
             //Não será atualizado o CPF/CNPJ pois trata-se de dado único e não deve ser alterado.
             doadorRetornado.setNome(doadorDTO.nome());
+            doadorRetornado.setEndereco(doadorDTO.endereco());
             doadorRetornado.setTelefone(doadorDTO.telefone());
             doadorRetornado.setEmail(doadorDTO.email());
             return toDoadorDTO(doadorRepo.save(doadorRetornado));
@@ -53,8 +54,12 @@ public class DoadorService {
         }
     }
 
-    public void RemoveDoador(int id) {
-        doadorRepo.deleteById(id);
+    public boolean  RemoveDoador(int id) {
+        if (doadorRepo.existsById(id)) {
+            doadorRepo.deleteById(id);
+            return true; // Exclusão bem-sucedida
+        }
+        return false; // Registro não encontrado
     }
 
     private DoadorDTO toDoadorDTO(Doador doador) {

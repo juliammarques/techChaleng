@@ -44,6 +44,7 @@ public class EntidadeBeneficiariaService {
             EntidadeBeneficiaria entidadeBeneficiariaRetornada = entidadeRepo.getReferenceById(id);
             //Não será atualizado o CPF/CNPJ pois trata-se de dado único e não deve ser alterado.
             entidadeBeneficiariaRetornada.setNome(entidadeBeneficiariaDTO.nome());
+            entidadeBeneficiariaRetornada.setEndereco(entidadeBeneficiariaDTO.endereco());
             entidadeBeneficiariaRetornada.setTelefone(entidadeBeneficiariaDTO.telefone());
             entidadeBeneficiariaRetornada.setEmail(entidadeBeneficiariaDTO.email());
             return toEntidadeBeneficiariaDTO(entidadeRepo.save(entidadeBeneficiariaRetornada));
@@ -52,8 +53,12 @@ public class EntidadeBeneficiariaService {
         }
     }
 
-    public void RemoveEntidadeBeneficiaria(int id) {
-        entidadeRepo.deleteById(id);
+    public boolean  RemoveEntidadeBeneficiaria(int id) {
+        if (entidadeRepo.existsById(id)) {
+            entidadeRepo.deleteById(id);
+            return true; // Exclusão bem-sucedida
+        }
+        return false; // Registro não encontrado
     }
 
     private EntidadeBeneficiariaDTO toEntidadeBeneficiariaDTO(EntidadeBeneficiaria entidadeBeneficiaria) {

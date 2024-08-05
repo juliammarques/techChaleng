@@ -63,7 +63,11 @@ public class EntidadeBeneficiariaController {
             description = "Esse endpoint remove uma entidade beneficiária através do ID."
     )
     public ResponseEntity<Void> RemoveEntidadeBeneficiaria(@PathVariable int id){
-        entidadeBeneficiariaService.RemoveEntidadeBeneficiaria(id);
-        return ResponseEntity.noContent().build();
+        boolean isRemoved = entidadeBeneficiariaService.RemoveEntidadeBeneficiaria(id);
+        if (isRemoved) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        } else {
+            return ResponseEntity.notFound().build(); // 404 Not Found
+        }
     }
 }
