@@ -34,13 +34,13 @@ public class DoadorService {
     }
 
     public DoadorDTO InserirDoador(DoadorDTO doadorDTO) {
-        validaDoador(doadorDTO);
+        validaDoador(doadorDTO,true);
         Doador doadorJPA = toDoador(doadorDTO);
         return toDoadorDTO(doadorRepo.save(doadorJPA));
     }
 
     public DoadorDTO AtualizaDoadorPeloId(int id, DoadorDTO doadorDTO) {
-        validaDoador(doadorDTO);
+        validaDoador(doadorDTO,false);
         try {
             Doador doadorRetornado = doadorRepo.getReferenceById(id);
             //Não será atualizado o CPF/CNPJ pois trata-se de dado único e não deve ser alterado.
@@ -84,7 +84,7 @@ public class DoadorService {
         return doadorNovo;
     }
 
-    private void validaDoador(DoadorDTO doadorDTO){
+    private void validaDoador(DoadorDTO doadorDTO,boolean validaCPFCNPJ){
         if(doadorDTO.cpfcnpj().length() != 11 && doadorDTO.cpfcnpj().length() != 14)
             throw new ControllerBadRequestException("O CPF ou CNPJ é Invalido");
         if (doadorDTO.cpfcnpj().length() == 11 && !CpfcnpjValidator.isValidCPF(doadorDTO.cpfcnpj()))
@@ -95,7 +95,7 @@ public class DoadorService {
             throw new ControllerBadRequestException("O Email é Invalido");
         if(!TelefoneValidator.isValidTelefone(doadorDTO.telefone()))
             throw new ControllerBadRequestException("O Telefone é Invalido, por favor utilize somente números.");
-        if(doadorRepo.findBycpfcnpj(doadorDTO.cpfcnpj()).isPresent())
+        if(validaCPFCNPJ && doadorRepo.findBycpfcnpj(doadorDTO.cpfcnpj()).isPresent())
             throw new ControllerBadRequestException("Já existe um registro com o cpf ou cnpj informado.");
     }
 }

@@ -31,14 +31,14 @@ public class EntidadeBeneficiariaService {
     }
 
     public EntidadeBeneficiariaDTO InserirEntidadeBeneficiaria(EntidadeBeneficiariaDTO entidadeBeneficiariaDTO) {
-        validaEntidadeBeneficiaria(entidadeBeneficiariaDTO);
+        validaEntidadeBeneficiaria(entidadeBeneficiariaDTO,true);
 
         EntidadeBeneficiaria entidadeBeneficiariaJPA = toEntidadeBeneficiaria(entidadeBeneficiariaDTO);
         return toEntidadeBeneficiariaDTO(entidadeRepo.save(entidadeBeneficiariaJPA));
     }
 
     public EntidadeBeneficiariaDTO AtualizaEntidadeBeneficiariaPeloId(int id, EntidadeBeneficiariaDTO entidadeBeneficiariaDTO) {
-        validaEntidadeBeneficiaria(entidadeBeneficiariaDTO);
+        validaEntidadeBeneficiaria(entidadeBeneficiariaDTO,false);
 
         try {
             EntidadeBeneficiaria entidadeBeneficiariaRetornada = entidadeRepo.getReferenceById(id);
@@ -83,10 +83,10 @@ public class EntidadeBeneficiariaService {
         return entidadeNova;
     }
 
-    private void validaEntidadeBeneficiaria(EntidadeBeneficiariaDTO entidadeBeneficiariaDTO){
+    private void validaEntidadeBeneficiaria(EntidadeBeneficiariaDTO entidadeBeneficiariaDTO,boolean validaCNPJ){
         if(!TelefoneValidator.isValidTelefone(entidadeBeneficiariaDTO.telefone()))
             throw new ControllerBadRequestException("O Telefone é Invalido, por favor utilize somente números.");
-        if(entidadeRepo.findBycnpj(entidadeBeneficiariaDTO.cnpj()).isPresent())
+        if(validaCNPJ && entidadeRepo.findBycnpj(entidadeBeneficiariaDTO.cnpj()).isPresent())
             throw new ControllerBadRequestException("Já existe um registro com o cnpj informado.");
     }
 }
